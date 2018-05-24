@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  CloudWatchS3Writer:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Environment:
+        Variables:
+          bucket_name: 'custom-logs'
+      FunctionName: 'CloudWatchBucketWriter'
+      Timeout: 30
+      Handler: 'com.telia.aws.cloudwatchtoremotebucket.Handler::handleRequest'
+      Runtime: 'java8'
+      CodeUri: 'build/libs/cloudwatch-logs-remote-bucket-1.0-SNAPSHOT-all.jar'
+      Policies:
+        - 'AWSLambdaExecute'

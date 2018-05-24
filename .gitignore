@@ -1,0 +1,54 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @glennbech
+Sign out
+2,553
+67,438 30,842 github/gitignore
+ Code  Pull requests 186  Projects 0  Insights
+gitignore/Global/JetBrains.gitignore
+7054f5d  14 days ago
+@KenjiOhtsuka KenjiOhtsuka Update JetBrains.gitignore
+@thunsaker @samskiter @LazarusX @arcresu @akelsch @victorhaggqvist @DKroot @twhitbeck @tsteinholz @ssinss @rocketraman @RobertoNovelo @Cantido @petermorlion @Omarasifshaikh @nfcopier @koppor @KenjiOhtsuka @jturmel @Nihlus @yatskevich @ikemo3 @GingerGeek @Fuhrmann @ergl @drothmaler
+     
+53 lines (40 sloc)  1.01 KB
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+.gradle/*
+build/*
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# CMake
+cmake-build-debug/
+cmake-build-release/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
