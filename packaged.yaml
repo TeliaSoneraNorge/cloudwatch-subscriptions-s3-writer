@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  CloudWatchS3Writer:
+    Properties:
+      CodeUri: s3://splunk-s3-test-8245/27647215c1d3f5213dbbf1172c44e8ed
+      Environment:
+        Variables:
+          bucket_name: custom-logs
+      FunctionName: CloudWatchBucketWriter
+      Handler: com.telia.aws.cloudwatchtoremotebucket.Handler::handleRequest
+      Policies:
+      - AWSLambdaExecute
+      Runtime: java8
+      Timeout: 30
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

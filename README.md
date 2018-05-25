@@ -9,9 +9,11 @@ The Lambda function builds with the provided gradle wrapper
 
 ```./gradlw.sh build```
 
+The lambda package is written to the build/distributions/ folder as a ZIP file. 
+ 
 ### Packckage and deploy
 
-During the build, the lambda package is written to the build/distributions/ folder as a ZIP file. The lambda function can be deployed using the [
+The lambda function can be deployed using the [
 AWS Serverless Application Model (AWS SAM)](https://github.com/awslabs/aws-sam-cli)
 
 ```
