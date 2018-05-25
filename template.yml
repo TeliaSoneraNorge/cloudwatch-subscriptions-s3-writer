@@ -11,6 +11,6 @@ Resources:
       Timeout: 30
       Handler: 'com.telia.aws.cloudwatchtoremotebucket.Handler::handleRequest'
       Runtime: 'java8'
-      CodeUri: 'build/libs/cloudwatch-logs-remote-bucket-1.0-SNAPSHOT-all.jar'
+      CodeUri: 'build/libs/cloudwatch-logs-remote-bucket-1.0-SNAPSHOT.jar'
       Policies:
         - 'AWSLambdaExecute'
