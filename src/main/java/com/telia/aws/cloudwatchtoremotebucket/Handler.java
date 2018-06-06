@@ -33,6 +33,7 @@ public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
         }
         final byte[] decoded = getMimeDecoder().decode(event.getAwslogs().getData());
         try {
+
             final PutObjectRequest req =
                     new PutObjectRequest(targetBucketName, UUID.randomUUID().toString(),
                             new GZIPInputStream(new ByteArrayInputStream(decoded)), null)
