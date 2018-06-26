@@ -3,14 +3,17 @@ package com.telia.aws.cloudwatchtoremotebucket;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import java.util.zip.GZIPInputStream;
 
 import static com.amazonaws.services.s3.AmazonS3ClientBuilder.defaultClient;
 import static com.amazonaws.services.s3.model.CannedAccessControlList.BucketOwnerFullControl;
+import static com.telia.aws.cloudwatchtoremotebucket.UnWrappedCloudWatchLogEvent.from;
 import static java.util.Base64.getMimeDecoder;
 
 /**
@@ -23,23 +26,27 @@ import static java.util.Base64.getMimeDecoder;
 public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
 
     private static final String BUCKET_NAME = "bucket_name";
+    private final Gson gson = new Gson();
 
     @Override
     public String handleRequest(CloudWatchPutRequest event, Context context) {
-
         final String targetBucketName = System.getenv(BUCKET_NAME);
         if (targetBucketName == null) {
             throw new RuntimeException("Lambda is missing environment variable " + BUCKET_NAME);
         }
-        final byte[] decoded = getMimeDecoder().decode(event.getAwslogs().getData());
-        try {
 
+        final byte[] decoded = getMimeDecoder().decode(event.getAwslogs().getData());
+
+        final CloudWatchLogEvents events = gson.fromJson(new String(decoded), CloudWatchLogEvents.class);
+        final List<UnWrappedCloudWatchLogEvent> unwrappedEvents = from(events);
+
+        try {
+            final byte[] bytes = gson.toJson(unwrappedEvents).getBytes();
             final PutObjectRequest req =
                     new PutObjectRequest(targetBucketName, UUID.randomUUID().toString(),
-                            new GZIPInputStream(new ByteArrayInputStream(decoded)), null)
+                            new GZIPInputStream(new ByteArrayInputStream(bytes)), null)
                             .withCannedAcl(BucketOwnerFullControl);
             return defaultClient().putObject(req).getContentMd5();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
