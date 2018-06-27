@@ -1,5 +1,44 @@
 # Cloudwatch-subscriptions-s3-writer
-Lambda function that can be used as a Cloud Watch subscription target. It decodes, decompresses and writes log data to an S3 bucket.
+
+Lambda function that can be used as a Cloud Watch subscription target. It decodes, decompresses, denormalizes and writes log data to an S3 bucket.
+
+
+## The cloud watch event
+
+The cloud watch event put to this Lambda function looks like this 
+
+```json
+ {
+    "awslogs": {
+    "data": "H4sIAAAAAAAAAHWPwQqCQBCGX0Xm7EFtK+smZBEUgXoLCdMhFtKV3akI8d0bLYmibvPPN3wz00CJxmQnTO41whwWQRIctmEcB6sQbFC3CjW3XW8kxpOpP+OC22d1Wml1qZkQGtoMsScxaczKN3plG8zlaHIta5KqWsozoTYw3/djzwhpLwivWFGHGpAFe7DL68JlBUk+l7KSN7tCOEJ4M3/qOI49vMHj+zCKdlFqLaU2ZHV2a4Ct/an0/ivdX8oYc1UVX860fQDQiMdxRQEAAA=="
+    }
+}
+```
+
+The data payload is Gzipped and base64 encoded. Decoded and decompressed it looks like this 
+
+```json
+{"messageType":"DATA_MESSAGE","owner":"123456789123","logGroup":"testLogGroup","logStream":"testLogStream","subscriptionFilters":["testFilter"],"logEvents":[{"id":"eventId1","timestamp":1440442987000,"message":"[ERROR] First test message"},{"id":"eventId2","timestamp":1440442987001,"message":"[ERROR] Second test message"}]}
+```
+
+
+## Note on denormalizing 
+
+Cloud watch groups log entries and writes many at once in one Put event to the lambda function. To make life easier on the Splunk side, log entries are split in the lambda function .
+
+The lambda function maps one Cloud Watch even to many events for ingestion by splunk and attaches meta data to every one. 
+
+The resulting JSON object, written to the S3 bucket. 
+
+```json
+[{"event":{"id":"eventId1","message":"[ERROR] First test message","timestamp":1440442987000},"owner":"123456789123","logGroup":"testLogGroup","logStream":"testLogStream","subscriptionFilters":["testFilter"]},{"event":{"id":"eventId2","message":"[ERROR] Second test message","timestamp":1440442987001},"owner":"123456789123","logGroup":"testLogGroup","logStream":"testLogStream","subscriptionFilters":["testFilter"]}]
+```
+
+
+
+
+```
+
 
 ## How to build and deploy
 
@@ -7,7 +46,7 @@ Lambda function that can be used as a Cloud Watch subscription target. It decode
 ### Build
 The Lambda function builds with the provided gradle wrapper
 
-```./gradlw.sh build```
+```./gradlw.sh buildZip```
 
 The lambda package is written to the build/distributions/ folder as a ZIP file. 
  
