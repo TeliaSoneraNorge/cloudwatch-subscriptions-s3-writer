@@ -43,7 +43,7 @@ The data payload is Gzipped and base64 encoded. Decoded and decompressed it look
 
 ## Denormalizing
 
-As seen in the example event. Cloud watch groups log entries in one event. To make life easier on the Splunk side, log entries are split in the lambda function .
+As seen in the example event. Cloud watch puts many entries into one event. To make life easier for consumers, log entries are split in the lambda function.
 
 The lambda function maps one Cloud Watch event to many events for ingestion by splunk and attaches meta data to every one. 
 
