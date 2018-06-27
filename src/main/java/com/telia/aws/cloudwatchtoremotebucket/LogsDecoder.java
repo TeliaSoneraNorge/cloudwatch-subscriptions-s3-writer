@@ -1,15 +1,29 @@
-package com.telia.aws;
+package com.telia.aws.cloudwatchtoremotebucket;
 
 import com.google.gson.Gson;
-import com.telia.aws.cloudwatchtoremotebucket.CloudWatchLogEvents;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.zip.GZIPInputStream;
 
 import static java.util.Base64.getMimeDecoder;
 
-public class LogsDecoder {
-
-    public static CloudWatchLogEvents fromJson(String data) {
-        final byte[] decoded = getMimeDecoder().decode(data);
-        return new Gson().fromJson(new String(decoded), CloudWatchLogEvents.class);
+/**
+ * Utility class that takes the Base 64 encoded zipped Cloud Watch payload and decods into an object
+ * representation of the type #CloudWatchLogEvents
+ */
+class LogsDecoder {
+    static CloudWatchLogEvents fromBase64EncodedZippedPayload(String base64Encoded) {
+        final byte[] decoded = getMimeDecoder().decode(base64Encoded);
+        final Reader reader;
+        try {
+            final GZIPInputStream in = new GZIPInputStream(new ByteArrayInputStream(decoded));
+            reader = new InputStreamReader(in);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new Gson().fromJson(reader, CloudWatchLogEvents.class);
     }
-
 }

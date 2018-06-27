@@ -1,6 +1,5 @@
 package com.telia.aws.cloudwatchtoremotebucket;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
