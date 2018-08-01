@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
-public class UnWrappedCloudWatchLogEvent {
+public class DenormalizedCloudwatchLogEvent {
 
     @Tolerate
-    public UnWrappedCloudWatchLogEvent() {
+    public DenormalizedCloudwatchLogEvent() {
     }
 
     @JsonUnwrapped
@@ -24,9 +24,9 @@ public class UnWrappedCloudWatchLogEvent {
     private String logStream;
     private String[] subscriptionFilters;
 
-    static List<UnWrappedCloudWatchLogEvent> from(CloudWatchLogEvents events) {
+    static List<DenormalizedCloudwatchLogEvent> from(CloudWatchLogEvents events) {
         return events.getLogEvents().parallelStream()
-                .map(e -> UnWrappedCloudWatchLogEvent.builder()
+                .map(e -> DenormalizedCloudwatchLogEvent.builder()
                         .event(e)
                         .logGroup(events.getLogGroup())
                         .logStream(events.getLogStream())
