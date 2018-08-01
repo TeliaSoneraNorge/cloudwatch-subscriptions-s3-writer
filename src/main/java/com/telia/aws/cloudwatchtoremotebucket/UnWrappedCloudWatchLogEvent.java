@@ -25,7 +25,7 @@ public class UnWrappedCloudWatchLogEvent {
     private String[] subscriptionFilters;
 
     static List<UnWrappedCloudWatchLogEvent> from(CloudWatchLogEvents events) {
-        return events.getLogEvents().stream()
+        return events.getLogEvents().parallelStream()
                 .map(e -> UnWrappedCloudWatchLogEvent.builder()
                         .event(e)
                         .logGroup(events.getLogGroup())
