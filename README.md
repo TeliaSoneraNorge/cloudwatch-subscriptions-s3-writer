@@ -18,30 +18,69 @@ The cloud watch event put to this Lambda function looks like this
 The data payload is Gzipped and base64 encoded. Decoded and decompressed it looks like this 
 
 ```json
-{"messageType":"DATA_MESSAGE","owner":"123456789123","logGroup":"testLogGroup","logStream":"testLogStream","subscriptionFilters":["testFilter"],"logEvents":[{"id":"eventId1","timestamp":1440442987000,"message":"[ERROR] First test message"},{"id":"eventId2","timestamp":1440442987001,"message":"[ERROR] Second test message"}]}
+{
+  "messageType": "DATA_MESSAGE",
+  "owner": "123456789123",
+  "logGroup": "testLogGroup",
+  "logStream": "testLogStream",
+  "subscriptionFilters": [
+    "testFilter"
+  ],
+  "logEvents": [
+    {
+      "id": "eventId1",
+      "timestamp": 1440442987000,
+      "message": "[ERROR] First test message"
+    },
+    {
+      "id": "eventId2",
+      "timestamp": 1440442987001,
+      "message": "[ERROR] Second test message"
+    }
+  ]
+}
 ```
 
+## Denormalizing
 
-## Note on denormalizing 
+As seen in the example event, Cloud watch can put many entries into one log event. To make life easier for consumers, log entries are split in the lambda function.
 
-Cloud watch groups log entries and writes many at once in one Put event to the lambda function. To make life easier on the Splunk side, log entries are split in the lambda function .
-
-The lambda function maps one Cloud Watch even to many events for ingestion by splunk and attaches meta data to every one. 
+The lambda function maps one Cloud Watch event to many events for ingestion by splunk and attaches meta data to every one. 
 
 The resulting JSON object, written to the S3 bucket. 
 
 ```json
-[{"event":{"id":"eventId1","message":"[ERROR] First test message","timestamp":1440442987000},"owner":"123456789123","logGroup":"testLogGroup","logStream":"testLogStream","subscriptionFilters":["testFilter"]},{"event":{"id":"eventId2","message":"[ERROR] Second test message","timestamp":1440442987001},"owner":"123456789123","logGroup":"testLogGroup","logStream":"testLogStream","subscriptionFilters":["testFilter"]}]
+[
+  {
+    "event": {
+      "id": "eventId1",
+      "message": "[ERROR] First test message",
+      "timestamp": 1440442987000
+    },
+    "owner": "123456789123",
+    "logGroup": "testLogGroup",
+    "logStream": "testLogStream",
+    "subscriptionFilters": [
+      "testFilter"
+    ]
+  },
+  {
+    "event": {
+      "id": "eventId2",
+      "message": "[ERROR] Second test message",
+      "timestamp": 1440442987001
+    },
+    "owner": "123456789123",
+    "logGroup": "testLogGroup",
+    "logStream": "testLogStream",
+    "subscriptionFilters": [
+      "testFilter"
+    ]
+  }
+]
 ```
-
-
-
-
-```
-
 
 ## How to build and deploy
-
 
 ### Build
 The Lambda function builds with the provided gradle wrapper
