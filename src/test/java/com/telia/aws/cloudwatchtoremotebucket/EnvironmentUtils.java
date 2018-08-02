@@ -3,8 +3,12 @@ package com.telia.aws.cloudwatchtoremotebucket;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-public class EnvironmentUtils {
-    public static void injectEnvironmentVariable(String key, String value)
+/**
+ * Utilities for simulating environment variables from unit tests so that they don't have to be run
+ * with -D options on the command line.
+ */
+class EnvironmentUtils {
+    static void injectEnvironmentVariable(String key, String value)
             throws Exception {
 
         Class<?> processEnvironment = Class.forName("java.lang.ProcessEnvironment");

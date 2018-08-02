@@ -8,12 +8,15 @@ import lombok.experimental.Tolerate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A CloudWathcLogEvent with metadata.
+ */
 @Data
 @Builder
-public class DenormalizedCloudwatchLogEvent {
+public class ExtendedCloudWatchLogEvent {
 
     @Tolerate
-    public DenormalizedCloudwatchLogEvent() {
+    public ExtendedCloudWatchLogEvent() {
     }
 
     @JsonUnwrapped
@@ -24,9 +27,9 @@ public class DenormalizedCloudwatchLogEvent {
     private String logStream;
     private String[] subscriptionFilters;
 
-    static List<DenormalizedCloudwatchLogEvent> from(CloudWatchLogEvents events) {
+    static List<ExtendedCloudWatchLogEvent> from(CloudWatchLogEvents events) {
         return events.getLogEvents().parallelStream()
-                .map(e -> DenormalizedCloudwatchLogEvent.builder()
+                .map(e -> ExtendedCloudWatchLogEvent.builder()
                         .event(e)
                         .logGroup(events.getLogGroup())
                         .logStream(events.getLogStream())

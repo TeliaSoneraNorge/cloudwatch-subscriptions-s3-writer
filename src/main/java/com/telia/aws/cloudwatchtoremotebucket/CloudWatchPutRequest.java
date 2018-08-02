@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class CloudWatchPutRequest {
+class CloudWatchPutRequest {
     private AWSLogs awslogs;
 }
 

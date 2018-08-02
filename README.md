@@ -15,7 +15,7 @@ The cloud watch event put to this Lambda function looks like this
 }
 ```
 
-The data payload is Gzipped and base64 encoded. Decoded and decompressed it looks like this 
+The data payload is Gzipped and base64 encoded. Decoded and decompressed it looks like this. By default, logs are written to the S3 bucket and ingested by splunk in this format. Splunk then needs to split messages at index- or search time. 
 
 ```json
 {
@@ -39,15 +39,17 @@ The data payload is Gzipped and base64 encoded. Decoded and decompressed it look
     }
   ]
 }
+
+
 ```
 
-## Denormalizing
+## Splitting and "denormalization"
 
-As seen in the example event, Cloud watch can put many entries into one log event. To make life easier for consumers, log entries are split in the lambda function.
+As seen in the example event, Cloud watch batch many entries into one log event. To make life easier for consumers, log entries can be split in the lambda function.
 
-The lambda function maps one Cloud Watch event to many events for ingestion by splunk and attaches meta data to every one. 
+If the environment variable *split_events* is set to *true* The lambda function maps one Cloud Watch event to many events for ingestion by splunk and attaches meta data to every one. 
 
-The resulting JSON object, written to the S3 bucket. 
+The resulting JSON object, will then written to the S3 bucket. 
 
 ```json
 [
@@ -83,6 +85,7 @@ The resulting JSON object, written to the S3 bucket.
 ## How to build and deploy
 
 ### Build
+
 The Lambda function builds with the provided gradle wrapper
 
 ```./gradlw.sh buildZip```
@@ -102,5 +105,6 @@ $ sam package --template-file template.yml --s3-bucket <<mybucket>> --output-tem
 $ sam deploy --template-file ./packaged.yaml --stack-name mystack --capabilities CAPABILITY_IAM
 ```
 
+### Local test
 
-
+The lambda function can be tested locally with SAM Local, with the environment variable *dry run* set to *true*. 
