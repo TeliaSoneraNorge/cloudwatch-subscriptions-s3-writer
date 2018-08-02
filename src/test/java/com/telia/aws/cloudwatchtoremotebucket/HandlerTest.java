@@ -22,6 +22,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 
+
 @RunWith(MockitoJUnitRunner.class)
 public class HandlerTest {
 
@@ -105,6 +106,8 @@ public class HandlerTest {
         // Assert that it contains metadata
         // All log items should have the same subscription filter as the parent JSON object
         assertTrue(eventList.stream().allMatch(e -> e.getOwner().equals(payload.getOwner())));
+
+        assertEquals(2, eventList.size());
     }
 
     /**
@@ -131,12 +134,9 @@ public class HandlerTest {
         // capture the PutObjectRequest that was sent to the object by the handler
         verify(s3Client).putObject(captor.capture());
 
-        // Assert that it contains metadata
-        Type listType = new TypeToken<ArrayList<CloudWatchLogEvent>>() {
-        }.getType();
-
         // Verifiy that we can deserialize the data to a CloudWatchLogEvents composite object (not split)
         CloudWatchLogEvents vanillaEvents = new Gson().fromJson(
                 new InputStreamReader(captor.getValue().getInputStream()), CloudWatchLogEvents.class);
+        assertEquals(2, vanillaEvents.getLogEvents().size());
     }
 }
