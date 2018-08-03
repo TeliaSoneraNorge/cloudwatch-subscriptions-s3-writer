@@ -6,7 +6,7 @@ resources:
     uri: https://github.com/TeliaSoneraNorge/cloudwatch-subscriptions-s3-writer.git
 
 jobs:                          
-- name: cloudwatch-lambda-build
+- name: compile-and-test
   public: true
   plan:
   - get: cloudwatch-lambda
