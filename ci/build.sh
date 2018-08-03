@@ -1,2 +1,2 @@
 #!/bin/sh
-gradle -p ../.. buildZip
+gradle -p cloudwatch-lambda buildZip
