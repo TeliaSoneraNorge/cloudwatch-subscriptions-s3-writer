@@ -12,4 +12,5 @@ inputs:
 - name: cloudwatch-lambda
 
 run:
- path: ./cloudwatch-lambda/ci/deploy.sh
+ path: sh
+ args: ./cloudwatch-lambda/ci/deploy.sh
