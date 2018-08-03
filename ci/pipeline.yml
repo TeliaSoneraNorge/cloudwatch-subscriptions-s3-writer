@@ -1,0 +1,15 @@
+---
+resources:
+- name: cloudwatch-lambda
+  type: git
+  source:
+    uri: https://github.com/TeliaSoneraNorge/cloudwatch-subscriptions-s3-writer.git
+
+jobs:                          
+- name: cloudwatch-lambda-build
+  public: true
+  plan:
+  - get: cloudwatch-lambda
+    trigger: true
+  - task: build
+    file: cloudwatch-lambda/ci/build.yml
