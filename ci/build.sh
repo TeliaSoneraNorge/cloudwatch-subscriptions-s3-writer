@@ -1,3 +1,3 @@
 #!/bin/sh
 gradle -p cloudwatch-lambda test buildZip
-cp build/distributions/*.zip dist
+cp cloudwatch-lambda/build/distributions/*.zip dist
