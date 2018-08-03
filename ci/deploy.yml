@@ -9,7 +9,7 @@ image_resource:
 
 inputs:
 - name: build/distributions
-- name: cloudwatch-lambda
+- name: dist
 
 run:
  path: sh
