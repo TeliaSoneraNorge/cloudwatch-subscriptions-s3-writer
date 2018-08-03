@@ -12,4 +12,5 @@ jobs:
   - get: cloudwatch-lambda
     trigger: true
   - task: build
+    privileged: true
     file: cloudwatch-lambda/ci/build.yml
