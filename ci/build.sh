@@ -2,4 +2,4 @@
 
 export TERM=${TERM:-dumb}
 cd  cloudwatch-lambda
-./gradlew --no-daemon buildZip
+gradle buildZip
