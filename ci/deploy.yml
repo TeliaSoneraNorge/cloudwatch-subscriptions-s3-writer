@@ -8,8 +8,8 @@ image_resource:
      tag: "latest"
 
 inputs:
-- name: build/distributions
 - name: dist
+- name: cloudwatch-lambda
 
 run:
  path: sh
