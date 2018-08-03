@@ -15,4 +15,3 @@ jobs:
     file: cloudwatch-lambda/ci/build.yml
   - task: deploy
     file: cloudwatch-lambda/ci/deploy.yml
-      AWS_DEFAULT_REGION:  eu-west-1
