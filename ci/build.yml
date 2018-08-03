@@ -8,6 +8,9 @@ image_resource:
 inputs:
 - name: cloudwatch-lambda
 
+outputs:
+- name: build/distributions
+
 run:
   user: root
   path: sh

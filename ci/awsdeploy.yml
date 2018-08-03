@@ -1,0 +1,14 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+     repository: teliaoss/concourse-python-aws
+     tag: "latest"
+
+inputs:
+- name: build/distributions
+
+run:
+- path: putobject.sh 
