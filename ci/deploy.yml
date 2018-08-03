@@ -11,4 +11,4 @@ inputs:
 - name: build/distributions
 
 run:
-- path: putobject.sh 
+- path: deploy.sh
