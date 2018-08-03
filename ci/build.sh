@@ -1,2 +1,2 @@
 #!/bin/sh
-gradle --no-deamon test buildZip
+gradle test buildZip
