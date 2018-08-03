@@ -9,13 +9,9 @@ inputs:
 - name: cloudwatch-lambda
 
 outputs:
-- name: build/distributions
+- name: dist
 
 run:
   user: root
   path: sh
-  dir: cloudwatch-lambda
-  args:
-    - -exc
-    - |
-      gradle --stacktrace test buildZip
+  args: [./cloudwatch-lambda/ci/build.sh]
