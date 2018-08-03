@@ -1,2 +1,2 @@
 #!/bin/sh
-gradle test buildZip
+gradle -p .. buildZip
