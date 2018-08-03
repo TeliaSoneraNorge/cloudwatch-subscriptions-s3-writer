@@ -9,4 +9,10 @@ inputs:
 - name: cloudwatch-lambda
 
 run:
-  path: cloudwatch-lambda/ci/build.sh
+  user: root
+  path: sh
+  dir: cloudwatch-lambda
+  args:
+    - -exc
+    - |
+      gradlsdf asde --stacktrace buildZip

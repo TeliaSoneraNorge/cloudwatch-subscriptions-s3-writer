@@ -12,10 +12,4 @@ jobs:
   - get: cloudwatch-lambda
     trigger: true
   - task: build
-     user: root
-     path: sh
-     dir: cloudwatch-lambda
-     args:
-      - -exc
-      - |
-        gradle buildZip
+    file: cloudwatch-lambda/ci/build.yml
