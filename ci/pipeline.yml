@@ -16,7 +16,7 @@ jobs:
   - task: deploy
     file: cloudwatch-lambda/ci/deploy.yml
     params:
-      AWS_ACCESS_KEY_ID:  ((telia-common-logs-prod-access-key))
-      AWS_SECRET_ACCESS_KEY:  ((telia-common-logs-prod-secret-key))
-      AWS_SESSION_TOKEN:  ((telia-common-logs-prod-session-token))
-      AWS_DEFAULT_REGION:  eu-west-1
+      - AWS_ACCESS_KEY_ID:  ((telia-common-logs-prod-access-key))
+      - AWS_SECRET_ACCESS_KEY:  ((telia-common-logs-prod-secret-key))
+      - AWS_SESSION_TOKEN:  ((telia-common-logs-prod-session-token))
+      - AWS_DEFAULT_REGION:  eu-west-1
