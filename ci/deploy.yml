@@ -9,6 +9,7 @@ image_resource:
 
 inputs:
 - name: build/distributions
+- name: cloudwatch-lambda
 
 run:
 - path: deploy.sh
