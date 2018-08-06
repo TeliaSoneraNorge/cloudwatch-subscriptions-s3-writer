@@ -64,6 +64,7 @@ public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
                         dataStream, null)
                         .withCannedAcl(BucketOwnerFullControl);
         s3Client.putObject(req);
+        System.out.println(key.toString());
         return key.toString();
     }
 
