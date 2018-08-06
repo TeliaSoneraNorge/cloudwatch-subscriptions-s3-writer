@@ -58,12 +58,13 @@ public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
             dataStream = cwPayloadToStream(event);
         }
 
+        final UUID key = UUID.randomUUID();
         final PutObjectRequest req =
-                new PutObjectRequest(targetBucketName, UUID.randomUUID().toString(),
+                new PutObjectRequest(targetBucketName, key.toString(),
                         dataStream, null)
                         .withCannedAcl(BucketOwnerFullControl);
         s3Client.putObject(req);
-        return null;
+        return key.toString();
     }
 
     /**
