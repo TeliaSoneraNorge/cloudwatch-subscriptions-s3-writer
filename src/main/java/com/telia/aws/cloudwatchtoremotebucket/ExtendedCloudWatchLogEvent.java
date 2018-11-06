@@ -1,5 +1,6 @@
 package com.telia.aws.cloudwatchtoremotebucket;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExtendedCloudWatchLogEvent {
 
     @Tolerate

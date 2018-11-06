@@ -1,6 +1,9 @@
 package com.telia.aws.cloudwatchtoremotebucket;
 
-import com.google.gson.Gson;
+import com.amazonaws.util.json.Jackson;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.json.ReaderBasedJsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,15 +18,17 @@ import static java.util.Base64.getMimeDecoder;
  * representation of the type #CloudWatchLogEvents
  */
 class LogsDecoder {
+
+
     static CloudWatchLogEvents fromBase64EncodedZippedPayload(String base64Encoded) {
         final byte[] decoded = getMimeDecoder().decode(base64Encoded);
         final Reader reader;
         try {
             final GZIPInputStream in = new GZIPInputStream(new ByteArrayInputStream(decoded));
             reader = new InputStreamReader(in);
+            return JacksonConfiguration.mapper.readValue(reader, CloudWatchLogEvents.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return new Gson().fromJson(reader, CloudWatchLogEvents.class);
     }
 }

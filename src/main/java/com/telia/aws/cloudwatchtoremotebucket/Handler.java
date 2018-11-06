@@ -4,7 +4,9 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -36,7 +38,8 @@ public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
     private static final String SPLIT_ENTRIES = "split";
 
     private AmazonS3 s3Client = defaultClient();
-    private final Gson gson = new Gson();
+    private ObjectMapper objectMapper = JacksonConfiguration.mapper;
+
 
     @Override
     public String handleRequest(CloudWatchPutRequest event, Context context) {
@@ -53,7 +56,11 @@ public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
 
         if (split) {
             final List<ExtendedCloudWatchLogEvent> denormalizedEvents = from(events);
-            dataStream = new ByteArrayInputStream(gson.toJson(denormalizedEvents).getBytes());
+            try {
+                dataStream = new ByteArrayInputStream(objectMapper.writeValueAsBytes(denormalizedEvents));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             dataStream = cwPayloadToStream(event);
         }
