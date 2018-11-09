@@ -1,0 +1,21 @@
+{
+  "messageType": "DATA_MESSAGE",
+  "owner": "123456789123",
+  "logGroup": "testLogGroup",
+  "logStream": "testLogStream",
+  "subscriptionFilters": [
+    "testFilter"
+  ],
+  "logEvents": [
+    {
+      "id": "eventId1",
+      "timestamp": 1440442987000,
+      "message": "{\"id\":\"34378723062773373506861595456737481608103500863696273409\",\"message\":\"{\\\"@timestamp\\\":\\\"2018-11-07T12:54:18.666+00:00\\\",\\\"@version\\\":\\\"1\\\",\\\"message\\\":\\\"Updating product cache with 267 items\\\",\\\"logger_name\\\":\\\"no.telia.messaging.cpa.api.service.product.ProductCacheService\\\",\\\"thread_name\\\":\\\"cache-16\\\",\\\"level\\\":\\\"INFO\\\",\\\"level_value\\\":20000,\\\"log_type\\\":\\\"server\\\"}\",\"timestamp\":1541595258666,\"owner\":\"123456789123\",\"logGroup\":\"cpa-api-service\",\"logStream\":\"container\/cpa-api-service\/88050cea-875b-414c-8b2a-4fccbc658f60\",\"subscriptionFilters\":[\"lambdafunction_logfilter_cpa-api-service\"]}\r\n"
+    },
+    {
+      "id": "eventId1",
+      "timestamp": 1440442987000,
+      "message": "{\"id\":\"34378723062773373506861595456737481608103500863696273409\",\"message\":\"{\\\"@timestamp\\\":\\\"2018-11-07T12:54:18.666+00:00\\\",\\\"@version\\\":\\\"1\\\",\\\"message\\\":\\\"Updating product cache with 267 items\\\",\\\"logger_name\\\":\\\"no.telia.messaging.cpa.api.service.product.ProductCacheService\\\",\\\"thread_name\\\":\\\"cache-16\\\",\\\"level\\\":\\\"INFO\\\",\\\"level_value\\\":20000,\\\"log_type\\\":\\\"server\\\"}\",\"timestamp\":1541595258666,\"owner\":\"123456789123\",\"logGroup\":\"cpa-api-service\",\"logStream\":\"container\/cpa-api-service\/88050cea-875b-414c-8b2a-4fccbc658f60\",\"subscriptionFilters\":[\"lambdafunction_logfilter_cpa-api-service\"]}\r\n"
+    }
+  ]
+}

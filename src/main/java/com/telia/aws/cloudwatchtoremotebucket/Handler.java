@@ -59,7 +59,7 @@ public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
             try {
                 dataStream = new ByteArrayInputStream(objectMapper.writeValueAsBytes(denormalizedEvents));
             } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+                 throw new RuntimeException(e);
             }
         } else {
             dataStream = cwPayloadToStream(event);
