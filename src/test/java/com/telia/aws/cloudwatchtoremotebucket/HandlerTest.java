@@ -1,17 +1,15 @@
-package com.telia.aws.cloudwatchtoremotebucket;
+    package com.telia.aws.cloudwatchtoremotebucket;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.IOUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import sun.nio.ch.IOUtil;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
