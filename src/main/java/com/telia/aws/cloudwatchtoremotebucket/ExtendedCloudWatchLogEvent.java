@@ -3,7 +3,6 @@ package com.telia.aws.cloudwatchtoremotebucket;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
