@@ -1,10 +1,5 @@
 package com.telia.aws.cloudwatchtoremotebucket;
 
-import com.amazonaws.util.json.Jackson;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.json.ReaderBasedJsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
