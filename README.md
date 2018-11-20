@@ -1,5 +1,12 @@
 # Cloudwatch-subscriptions-s3-writer
 
+
+# CI / CD
+
+This concourse job builds the lambda ; https://concourse.common-services.telia.io/teams/cloudops/pipelines/cloudwatch-s3-forwarder/
+
+# Intro
+
 Lambda function that can be used as a Cloud Watch subscription target. It decodes, decompresses, denormalizes and writes log data to an S3 bucket.
 
 

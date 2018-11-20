@@ -2,6 +2,7 @@ package com.telia.aws.cloudwatchtoremotebucket;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,12 +43,18 @@ public class ExtendedCloudWatchSerializer extends StdSerializer<ExtendedCloudWat
         ObjectMapper mapper = new ObjectMapper();
         JsonFactory factory = mapper.getFactory();
 
-        JsonParser parser = factory.createParser(value.getEvent().getMessage());
-        JsonNode root = mapper.readTree(parser);
-        String messagePayload = root.findPath("message").asText();
-        parser = factory.createParser(messagePayload);
-        JsonNode payloadNode = parser.readValueAsTree();
-        copyJsonInline(payloadNode, gen);
+        JsonParser parser = null;
+        String messagePayload = null;
+        try {
+            parser = factory.createParser(value.getEvent().getMessage());
+            JsonNode root = mapper.readTree(parser);
+            messagePayload = root.findPath("message").asText();
+            parser = factory.createParser(messagePayload);
+            JsonNode payloadNode = parser.readValueAsTree();
+            copyJsonInline(payloadNode, gen);
+        } catch (JsonParseException e) {
+            gen.writeStringField("message", messagePayload);
+        }
         gen.writeEndObject();
     }
 
