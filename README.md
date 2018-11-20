@@ -56,37 +56,43 @@ As seen in the example event, Cloud watch batch many entries into one log event.
 
 If the environment variable *split_events* is set to *true* The lambda function maps one Cloud Watch event to many events for ingestion by splunk and attaches meta data to every one. 
 
-The resulting JSON object, will then written to the S3 bucket. 
+The resulting JSON object, will then written to the S3 bucket. Data coming from cloudwatch is prefixed with ```@@@@Cloudwatch.*```
+
+Data in the logevents.*.message is interpreted as a JSON string, parsed and in-lined before the data is sent to the S3 bucket for ingestion by splunk.
+
 
 ```json
-[
-  {
-    "event": {
-      "id": "eventId1",
-      "message": "[ERROR] First test message",
-      "timestamp": 1440442987000
-    },
-    "owner": "123456789123",
-    "logGroup": "testLogGroup",
-    "logStream": "testLogStream",
-    "subscriptionFilters": [
-      "testFilter"
-    ]
-  },
-  {
-    "event": {
-      "id": "eventId2",
-      "message": "[ERROR] Second test message",
-      "timestamp": 1440442987001
-    },
-    "owner": "123456789123",
-    "logGroup": "testLogGroup",
-    "logStream": "testLogStream",
-    "subscriptionFilters": [
-      "testFilter"
-    ]
-  }
-]
+[{
+	"@@@@CloudWatch.owner": "123456789123",
+	"@@@@CloudWatch.logGroup": "testLogGroup",
+	"@@@@CloudWatch.logStream": "testLogStream",
+	"@@@@CloudWatch.subscriptionFilters": ["testFilter"],
+	"@@@@CloudWatch.id": "eventId1",
+	"@@@@CloudWatch.timestamp": 1440442987000,
+	"@timestamp": "2018-11-07T12:54:18.666+00:00",
+	"@version": "1",
+	"message": "Updating product cache with 267 items",
+	"logger_name": "no.telia.messaging.cpa.api.service.product.ProductCacheService",
+	"thread_name": "cache-16",
+	"level": "INFO",
+	"level_value": 20000,
+	"log_type": "server"
+}, {
+	"@@@@CloudWatch.owner": "123456789123",
+	"@@@@CloudWatch.logGroup": "testLogGroup",
+	"@@@@CloudWatch.logStream": "testLogStream",
+	"@@@@CloudWatch.subscriptionFilters": ["testFilter"],
+	"@@@@CloudWatch.id": "eventId1",
+	"@@@@CloudWatch.timestamp": 1440442987000,
+	"@timestamp": "2018-11-07T12:54:18.666+00:00",
+	"@version": "1",
+	"message": "Updating product cache with 267 items",
+	"logger_name": "no.telia.messaging.cpa.api.service.product.ProductCacheService",
+	"thread_name": "cache-16",
+	"level": "INFO",
+	"level_value": 20000,
+	"log_type": "server"
+}]
 ```
 
 ## How to build and deploy
