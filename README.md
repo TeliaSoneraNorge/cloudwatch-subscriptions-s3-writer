@@ -1,6 +1,6 @@
 # Cloudwatch-subscriptions-s3-writer
 
-(https://travis-ci.org/TeliaSoneraNorge/cloudwatch-subscriptions-s3-writer.svg?branch=master)
+![build](https://travis-ci.org/TeliaSoneraNorge/cloudwatch-subscriptions-s3-writer.svg?branch=master)
 
 # CI / CD
 
