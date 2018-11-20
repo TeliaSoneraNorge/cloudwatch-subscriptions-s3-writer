@@ -1,5 +1,6 @@
 # Cloudwatch-subscriptions-s3-writer
 
+![build](https://travis-ci.org/TeliaSoneraNorge/cloudwatch-subscriptions-s3-writer.svg?branch=master)
 
 # CI / CD
 
@@ -72,7 +73,7 @@ Data in the logevents.*.message is interpreted as a JSON string, parsed and in-l
 	"@timestamp": "2018-11-07T12:54:18.666+00:00",
 	"@version": "1",
 	"message": "Updating product cache with 267 items",
-	"logger_name": "no.telia.messaging.cpa.api.service.product.ProductCacheService",
+	"logger_name": "Loggername",
 	"thread_name": "cache-16",
 	"level": "INFO",
 	"level_value": 20000,
@@ -87,13 +88,17 @@ Data in the logevents.*.message is interpreted as a JSON string, parsed and in-l
 	"@timestamp": "2018-11-07T12:54:18.666+00:00",
 	"@version": "1",
 	"message": "Updating product cache with 267 items",
-	"logger_name": "no.telia.messaging.cpa.api.service.product.ProductCacheService",
+	"logger_name": "loggername",
 	"thread_name": "cache-16",
 	"level": "INFO",
 	"level_value": 20000,
 	"log_type": "server"
 }]
 ```
+
+## Support for structured payloads
+
+If the log event contains a field called "message" and this field is a JSON OBject, the JSON object will be parsed, and all of its fields appended to the root object. 
 
 ## How to build and deploy
 
