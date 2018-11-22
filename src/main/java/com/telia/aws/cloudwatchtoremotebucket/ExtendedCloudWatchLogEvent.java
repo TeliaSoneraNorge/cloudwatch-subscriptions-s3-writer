@@ -32,8 +32,6 @@ public class ExtendedCloudWatchLogEvent {
     private String[] subscriptionFilters;
 
     static List<ExtendedCloudWatchLogEvent> from(CloudWatchLogEvents events) {
-        System.out.println(events);
-
         return events.getLogEvents().parallelStream()
                 .map(e -> ExtendedCloudWatchLogEvent.builder()
                         .event(e)
