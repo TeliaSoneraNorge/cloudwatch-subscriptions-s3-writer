@@ -67,6 +67,7 @@ public class Handler implements RequestHandler<CloudWatchPutRequest, String> {
         final UUID key = UUID.randomUUID();
         Arn arn = new Arn(context.getInvokedFunctionArn());
         String objectName = arn.getAccountId() + "/" + key.toString();
+        System.out.println("Writing logs to " + objectName);
         final PutObjectRequest req =
                 new PutObjectRequest(targetBucketName, objectName,
                         dataStream, null)
