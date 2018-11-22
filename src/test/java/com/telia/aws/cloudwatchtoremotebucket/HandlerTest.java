@@ -17,9 +17,10 @@
     import static com.telia.aws.cloudwatchtoremotebucket.LogsDecoder.fromBase64EncodedZippedPayload;
     import static org.junit.Assert.assertEquals;
     import static org.mockito.Mockito.verify;
+    import static org.mockito.Mockito.when;
 
 
-@RunWith(MockitoJUnitRunner.class)
+    @RunWith(MockitoJUnitRunner.class)
 public class HandlerTest {
 
     @Mock
@@ -79,6 +80,7 @@ public class HandlerTest {
 
         Handler handler = new Handler();
         handler.setS3Client(s3Client);
+        when(context.getInvokedFunctionArn()).thenReturn("arn:aws:lambda:eu-west-1:369412094037:function:sample_log_forwarder");
         handler.handleRequest(awsCloudWatchEvent, context);
 
         // capture the PutObjectRequest that was sent to the object by the handler
