@@ -53,52 +53,9 @@ The data payload is Gzipped and base64 encoded. Decoded and decompressed it look
 
 ## Splitting and "denormalization"
 
-As seen in the example event, Cloud watch batch many entries into one log event. To make life easier for consumers, log entries can be split in the lambda function.
+As seen in the example event, Cloud watch batch many entries into one log event. To make life easier for consumers, log entries are by default split in the lambda function. The lambda function splits the Cloud Watch event to individual events as they are written to the S3 bucket specified. 
 
-If the environment variable *split_events* is set to *true* The lambda function maps one Cloud Watch event to many events for ingestion by splunk and attaches meta data to every one. 
-
-The resulting JSON object, will then written to the S3 bucket. Data coming from cloudwatch is prefixed with ```@@@@Cloudwatch.*```
-
-Data in the logevents.*.message is interpreted as a JSON string, parsed and in-lined before the data is sent to the S3 bucket for ingestion by splunk.
-
-
-```json
-[{
-	"@@@@CloudWatch.owner": "123456789123",
-	"@@@@CloudWatch.logGroup": "testLogGroup",
-	"@@@@CloudWatch.logStream": "testLogStream",
-	"@@@@CloudWatch.subscriptionFilters": ["testFilter"],
-	"@@@@CloudWatch.id": "eventId1",
-	"@@@@CloudWatch.timestamp": 1440442987000,
-	"@timestamp": "2018-11-07T12:54:18.666+00:00",
-	"@version": "1",
-	"message": "Updating product cache with 267 items",
-	"logger_name": "Loggername",
-	"thread_name": "cache-16",
-	"level": "INFO",
-	"level_value": 20000,
-	"log_type": "server"
-}, {
-	"@@@@CloudWatch.owner": "123456789123",
-	"@@@@CloudWatch.logGroup": "testLogGroup",
-	"@@@@CloudWatch.logStream": "testLogStream",
-	"@@@@CloudWatch.subscriptionFilters": ["testFilter"],
-	"@@@@CloudWatch.id": "eventId1",
-	"@@@@CloudWatch.timestamp": 1440442987000,
-	"@timestamp": "2018-11-07T12:54:18.666+00:00",
-	"@version": "1",
-	"message": "Updating product cache with 267 items",
-	"logger_name": "loggername",
-	"thread_name": "cache-16",
-	"level": "INFO",
-	"level_value": 20000,
-	"log_type": "server"
-}]
-```
-
-## Support for structured payloads
-
-If the log event contains a field called "message" and this field is a JSON OBject, the JSON object will be parsed, and all of its fields appended to the root object. 
+The lambda function use the account id of the execution context as a prefix/folder for files in S3. 
 
 ## How to build and deploy
 
