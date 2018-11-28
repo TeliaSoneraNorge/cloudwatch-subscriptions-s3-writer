@@ -53,7 +53,7 @@ The data payload is Gzipped and base64 encoded. Decoded and decompressed it look
 
 ## Splitting and "denormalization"
 
-As seen in the example event, Cloud watch batch many entries into one log event. To make life easier for consumers, log entries are by default split in the lambda function. The lambda function splits the Cloud Watch event to individual events as they are written to the S3 bucket specified. 
+As seen in the example event, Cloud Watch batches many entries into one log event. To make life easier for consumers, log entries are by default split in the lambda function. The lambda function splits the Cloud Watch event to individual events as they are written to the S3 bucket specified. 
 
 The lambda function use the account id of the execution context as a prefix/folder for files in S3. 
 
